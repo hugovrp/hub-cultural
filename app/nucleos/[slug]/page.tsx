@@ -275,7 +275,7 @@ export default function NucleoPage({ params }: PageProps) {
                     key={index}
                     onClick={() => setCurrentIndex(index)}
                     className={`relative min-w-[80px] h-[65px] overflow-hidden rounded-lg border-2 transition-all duration-300
-                      ${currentIndex === index ? "border-green1" : "border-transparent opacity-70 hover:opacity-100"}`}
+                      ${currentIndex === index ? "border-blue1" : "border-transparent opacity-70 hover:opacity-100"}`}
                   >
                     {item._type === "galleryImage" ? (
                       <Image src={item.image} alt="" fill sizes="80px" className="object-cover" />
