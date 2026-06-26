@@ -52,17 +52,15 @@ Sistema de contato totalmente funcional utilizando:
 
 - EmailJS para envio de mensagens.
 - Validação de dados com Zod.
-- Sanitização de entradas com DOMPurify.
 - Feedback visual para o usuário após o envio.
 
 > Integrado com Cloudflare Turnstile para impedir envios automatizados por bots.
 
 ### 🔍 Validação e Segurança
 
-Validação de dados com Zod.
-Sanitização de conteúdo com DOMPurify.
-Verificação de captcha via Cloudflare Turnstile.
-Variáveis sensíveis protegidas por ambiente (.env).
+- Validação de dados com Zod.
+- Verificação de captcha via Cloudflare Turnstile.
+- Variáveis sensíveis protegidas por ambiente (.env).
 
 <br>
 
