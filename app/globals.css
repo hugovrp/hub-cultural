@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+:root {
+  --dark-blue: #0d1f27;
+  --blue1: #17609b;
+  --blue2: #1e7fd1;
+  --blue3: #189cff;
+  --light-blue1: #c5e7f4;
+  --light-blue2: #70c7e9;
+  --light-blue3: #54b0d9;
+
+  --foreground: #0e0e0e;
+  --background: #fdfdfd;
+  --dark-gray: #1a1a1a;
+  --gray: #6f6f6f;
+  --light-gray1: #efefef;
+  --light-gray2: #c4c4c4;
+}
+
+@theme {
+  /* Mapeando as cores para o Tailwind */
+  --color-dark-blue: var(--dark-blue);
+  --color-blue1: var(--blue1);
+  --color-blue2: var(--blue2);
+  --color-blue3: var(--blue3);
+  --color-light-blue1: var(--light-blue1);
+  --color-light-blue2: var(--light-blue2);
+  --color-light-blue3: var(--light-blue3);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-dark-gray: var(--dark-gray);
+  --color-gray: var(--gray);
+  --color-light-gray1: var(--light-gray1);
+  --color-light-gray2: var(--light-gray2);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--dark-gray);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+q {
+  font-family: var(--font-title);
+}
+
+.font-title {
+  font-family: var(--font-title);
+}
