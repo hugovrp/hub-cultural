@@ -153,7 +153,7 @@ export default async function HomePage() {
           className="text-center max-w-3xl mx-auto"
         >
           <p className="text-blue1/90 font-semibold text-[12px] md:text-sm uppercase tracking-widest font-title">
-            Nossos Projetos
+            Portfólio
           </p>
 
           <h1 className="text-[34px] md:text-[42px] font-semibold text-dark-blue my-4">
@@ -256,7 +256,7 @@ export default async function HomePage() {
               className="bg-blue1 text-background border-blue1 hover:bg-background hover:text-blue1 hover:shadow-lg text-[12px] font-semibold md:text-sm 
                 px-5 py-2.5 border-2 rounded-md duration-300 hover:shadow-lg hover:-translate-y-[2px] transition-all"
             >
-              Conheça todos os núcleos
+              Explorar portfólio
             </Link>
           </div>
           

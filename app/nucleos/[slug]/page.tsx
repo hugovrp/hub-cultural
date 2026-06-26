@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import ProjectCard from "@/components/nucleos/project-card";
 import ProjectModal from "@/components/nucleos/project-modal";
+import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import NucleusPageHero from "@/components/nucleos/nucleus-page-hero";
 
 export interface GalleryImage { 
@@ -54,7 +55,19 @@ async function getNucleus(slug : string) {
       content {
         ...,
         "aboutImage": aboutImage.asset->url,
-      } 
+        "gallery": gallery[] { 
+          _type, 
+
+          _type == "galleryImage" => { 
+            "image": image.asset->url, 
+            alt 
+          }, 
+          
+          _type == "galleryVideo" => { 
+            "video": video.asset->url 
+          } 
+        }
+      }
     } 
   `, { slug });
 }
@@ -95,6 +108,7 @@ export default function NucleoPage({ params }: PageProps) {
   const [whatsapp, setWhatsapp] = useState<any>(null);
   const [projects, setProjects] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedProject, setSelectedProject] = useState<ProjectProps | null>(null);
 
   useEffect(() => {
@@ -147,6 +161,41 @@ export default function NucleoPage({ params }: PageProps) {
   const content = data?.content || {};
   const whatsappUrl = `/`;
 
+  const gallery = (data.content?.gallery || []).filter((item : GalleryItem) => {
+    if (item._type === "galleryImage") 
+      return item.image && item.image.trim() !== "";
+
+    if (item._type === "galleryVideo") 
+      return item.video && item.video.trim() !== "";
+
+    return false;
+  });
+
+  const hasGallery = gallery.length > 0;
+  const displayGallery: GalleryItem[] = hasGallery
+    ? gallery
+    : [
+        {
+          _type: "galleryImage",
+          image: content.aboutImage,
+          alt: 'Imagem default',
+        },
+      ];
+
+  const currentItem = displayGallery[currentIndex];
+
+  function nextSlide() {
+    setCurrentIndex((prev) =>
+      prev === displayGallery.length - 1 ? 0 : prev + 1
+    );
+  }
+
+  function prevSlide() {
+    setCurrentIndex((prev) =>
+      prev === 0 ? displayGallery.length - 1 : prev - 1
+    );
+  }
+
   return (
     <div>
       <NucleusPageHero 
@@ -178,15 +227,70 @@ export default function NucleoPage({ params }: PageProps) {
           </div>
 
           <div 
-            className="hidden md:flex justify-center"
+            className="hidden md:flex flex-col justify-center gap-3"
             data-aos="fade-up" 
             data-aos-once="true"
           >
-            <div className="relative w-[400px] h-[350px]">
-              <Image src={content.aboutImage} alt="Sobre Imagem" fill sizes="350px" rel="preload"
-                     className="object-cover object-center rounded-lg" 
-              />
+            <div className="relative w-[500px] h-[350px] overflow-hidden rounded-lg border border-light-gray1">
+              {currentItem?._type === "galleryImage" ? (
+                <Image
+                  src={currentItem.image}
+                  alt={currentItem.alt || data.title}
+                  fill
+                  sizes="500px"
+                  rel="preload"
+                  className="object-cover object-center transition-all duration-300"
+                />
+              ) : (
+                <video
+                  src={currentItem?.video}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-cover"
+                />
+              )}
+ 
+              {hasGallery && displayGallery.length > 1 && (
+                <>
+                  <button
+                    onClick={prevSlide}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-9 h-9 rounded-full bg-black/50 text-white hover:bg-black/60 transition-all duration-300"
+                  >
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button
+                    onClick={nextSlide}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-9 h-9 rounded-full bg-black/50 text-white hover:bg-black/60 transition-all duration-300"
+                  >
+                    <ChevronRight size={16} />
+                  </button>
+                </>
+              )}
             </div>
+ 
+            {hasGallery && displayGallery.length > 1 && (
+              <div className="flex gap-2 overflow-x-auto pb-1 w-[500px]">
+                {displayGallery.map((item: GalleryItem, index: number) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentIndex(index)}
+                    className={`relative min-w-[80px] h-[65px] overflow-hidden rounded-lg border-2 transition-all duration-300
+                      ${currentIndex === index ? "border-green1" : "border-transparent opacity-70 hover:opacity-100"}`}
+                  >
+                    {item._type === "galleryImage" ? (
+                      <Image src={item.image} alt="" fill sizes="80px" className="object-cover" />
+                    ) : (
+                      <div className="relative w-full h-full">
+                        <video src={item.video} className="absolute inset-0 w-full h-full object-cover" />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                          <Play size={18} className="text-white fill-white" />
+                        </div>
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
