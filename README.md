@@ -4,7 +4,7 @@ Site institucional desenvolvido com Next.js para o Hub Cultural, uma organizaç�
 
 A plataforma reúne informações sobre projetos, eventos, ações comunitárias e iniciativas culturais, proporcionando uma experiência moderna, responsiva e com gerenciamento de conteúdo simplificado através do Sanity CMS.
 
-## 🌐 Demonstração
+## 🎬 Demonstração
 
 🔗 **Acesse o projeto:** https://hub-cultural.netlify.app
 
